@@ -1,0 +1,57 @@
+[tilemap/config] Fix url manipulation and promise
+
+Backports PR #9754
+
+**Commit 1:**
+[ui/vis_maps/tests] use $injector to avoid awkward naming
+
+* Original sha: 52d35fb108712d08c127d052f07e9f2e01bbd7ce
+* Authored by spalger <spalger@users.noreply.github.com> on 2017-01-04T19:39:37Z
+
+**Commit 2:**
+[ui/vis_maps/tests] avoid boolean assertions for better error messages
+
+* Original sha: b118a074c232396a4ee8cefc9e6cc0f4cd71e556
+* Authored by spalger <spalger@users.noreply.github.com> on 2017-01-04T20:39:53Z
+
+**Commit 3:**
+[ui/vis_maps/tests] verify addQueryParams behavior over time
+
+* Original sha: dff8315098d5129dacc30c770d44b58f220a3822
+* Authored by spalger <spalger@users.noreply.github.com> on 2017-01-05T19:31:45Z
+
+**Commit 4:**
+[ui/vis_maps/tests] stub tilemapsConfig rather than monkey-patching it
+
+* Original sha: 3099bb0bfbec2d3e58dc7f91eb003afaad9980f4
+* Authored by spalger <spalger@users.noreply.github.com> on 2017-01-04T20:52:30Z
+
+**Commit 5:**
+[ui/vis_maps] remove async/await usage because angular
+
+* Original sha: 084b914a1e3165ab58a35510017da5f23841aac8
+* Authored by spalger <spalger@users.noreply.github.com> on 2017-01-04T21:00:21Z
+
+**Commit 6:**
+[ui/vis_maps/tests] add failing test
+
+* Original sha: f38e7dc4288f631c4b3f35269569cb356dac5bad
+* Authored by spalger <spalger@users.noreply.github.com> on 2017-01-05T20:21:20Z
+
+**Commit 7:**
+[ui/url] add modifyUrl() helper
+
+* Original sha: d4b9849fe5552bfc423e6022a89c441be2e4d897
+* Authored by spalger <spalger@users.noreply.github.com> on 2017-01-03T19:40:20Z
+
+**Commit 8:**
+[ui/vis_maps] use modifyUrl() helper to extend query string
+
+* Original sha: bf4083fc74717e3e4e750b6250745674f5cdcb2e
+* Authored by spalger <spalger@users.noreply.github.com> on 2017-01-03T19:49:56Z
+
+**Commit 9:**
+Merge branch 'master' of github.com:elastic/kibana into fix/tilemap-manifest-url-manipulation
+
+* Original sha: 22669aaa6343d38fc74de9895a8a29eebf04836a
+* Authored by spalger <spalger@users.noreply.github.com> on 2017-01-06T19:21:41Z
