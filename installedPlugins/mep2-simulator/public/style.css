@@ -1,0 +1,16 @@
+body {
+    background-color: #ddd;
+}
+
+#terrain {
+    width: 370px;
+    height: 560px;
+    float: left;
+    background-image: url('images/terrain.png');
+    background-size: cover;
+}
+
+#terrain-holder {
+    margin: auto;
+    /* Here goes cool design stuff */
+}
