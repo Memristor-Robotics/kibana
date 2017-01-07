@@ -1,16 +1,16 @@
 define(function(require) {
-	require('plugins/mep2-terrain/style.css');
+	require('plugins/mep-terrain/style.css');
 
-    const App = require('plugins/mep2-terrain/js/App.js');
-    let telemetry = require('plugins/mep2-telemetry-live/js/Telemetry.js').get();
+    const App = require('plugins/mep-terrain/js/App.js');
+    let telemetry = require('plugins/mep-telemetry-live/js/Telemetry.js').get();
 
     // Create an Angular module for this plugin
 	var module = require('ui/modules').get('skeleton');
-	module.controller('MEP2-TerrainController', function($scope, $element) {
-		let canvas = $element.find('#terrain-canvas').get(0);
+	module.controller('MepTerrainController', function($scope, $element) {
+		let canvas = $element.find('#mep-terrain-canvas').get(0);
 		new App(telemetry, canvas, {
             backgroundImageUrl: '/bundles/installedPlugins/mep2-simulator/public/images/terrain.png'
-        });
+        })
 	});
 
 	function PluginProvider(Private) {
@@ -18,12 +18,12 @@ define(function(require) {
 
 		// Your configs go here
 		return new TemplateVisType({
-			name: 'mep2-terrain',
+			name: 'mep-terrain',
 			title: 'Terrain',
 			icon: 'fa-map',
 			description: 'Visualise state on terrain',
 			requiresSearch: false,
-			template: require('plugins/mep2-terrain/plugin.html')
+			template: require('plugins/mep-terrain/plugin.html')
 		});
 	}
 	require('ui/registry/vis_types').register(PluginProvider);
