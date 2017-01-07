@@ -4,7 +4,7 @@ Kibana is an open source ([Apache Licensed](https://github.com/elastic/kibana/bl
 
 ## Changes
 
-**Important for upgrade.** Files that had changed since the fork.
+**Important for MEP upgrade.** Files that had changed since the fork.
 - `installedPlugins/*` (added new plugins)
 - `src/ui/public/timepicker/quick_ranges.js` (add new range, last 90s)
 - `src/ui/public/timepicker/refresh_intervals.js` (add new refresh interval, every 1s)
