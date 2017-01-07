@@ -2,6 +2,13 @@
 
 Kibana is an open source ([Apache Licensed](https://github.com/elastic/kibana/blob/master/LICENSE.md)), browser based analytics and search dashboard for Elasticsearch. Kibana is a snap to setup and start using. Kibana strives to be easy to get started with, while also being flexible and powerful, just like Elasticsearch.
 
+## Changes
+
+**Important for upgrade.** Files that had changed since the fork.
+- `installedPlugins/*` (added new plugins)
+- `src/ui/public/timepicker/quick_ranges.js` (add new range, last 90s)
+- `src/ui/public/timepicker/refresh_intervals.js` (add new refresh interval, every 1s)
+
 ## Requirements
 
 - Elasticsearch version 2.4.0 or later
