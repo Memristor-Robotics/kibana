@@ -9,7 +9,7 @@ define(function(require) {
 	module.controller('MepTerrainController', function($scope, $element) {
 		let canvas = $element.find('#mep-terrain-canvas').get(0);
 		new App(telemetry, canvas, {
-            backgroundImageUrl: '/bundles/installedPlugins/mep2-simulator/public/images/terrain.png'
+            backgroundImageUrl: '/bundles/installedPlugins/mep-simulator/public/images/terrain.png'
         })
 	});
 
