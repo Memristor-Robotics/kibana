@@ -75,7 +75,7 @@ class Robot {
         let moveStepSizeY = this.visual.moveStepSizeMul * Math.abs(Math.cos(destinationAngle * (Math.PI / 180)));
 
         let determineY = (tempX) => { return ((y - startY) / (x - startX)) * (tempX - startX) + startY; };
-        let determineX = (tempY) => { return ((tempY + startY) * (x - startX)) / (y - startY) + startX; };
+        let determineX = (tempY) => { return (startX * y - x * startY + tempY * (x - startX)) / (y - startY); };
         let move = () => {
             let newX;
             let newY;
