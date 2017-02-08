@@ -11,12 +11,16 @@ class App {
         }, config);
 
         this.visual = {
-          obstacles: {},
-          robot: {
-            x: 0,
-            y: 0,
-            orientation: 0
-          }
+            obstacles: {},
+            robot: {
+                x: 0,
+                y: 0,
+                width: 200,
+                height: 200,
+                orientation: 0,
+                hazardObstacleDistance: 200
+            },
+            targets: []
         };
         this.backgroundImage = null;
 
@@ -27,25 +31,67 @@ class App {
         this.ctx = canvas.getContext('2d');
         this.ctx.scale(canvasWidth / this.config.terrainWidth, canvasHeight / this.config.terrainHeight);
 
-        // Render default params
-        this.render();
 
-        // Listen for polygon changes
+        // Event: Obstacle added
         telemetry.on('data_dash:big_TerrainService_ObstacleAdded', (packet) => {
+            if (packet.params === undefined) return;
+
             app.visual.obstacles[packet.params.id] = packet.params;
             app.render();
         });
+
+        // Event: Obstacle removed
         telemetry.on('data_dash:big_TerrainService_ObstacleRemoved', (packet) => {
+            if (packet.params === undefined) return;
+
             if (app.visual.obstacles[packet.params.id] !== undefined) {
                 delete app.visual.obstacles[packet.params.id];
                 app.render();
             }
         });
-        telemetry.on('data_dash:big_PositionEstimator_PositionChanged', (packet) => {
+
+        // Event: Position changed
+        telemetry.on('data_dash:big_PositionService_PositionChanged', (packet) => {
+            if (packet.params === undefined) return;
+
             app.visual.robot.x = packet.params.x;
             app.visual.robot.y = packet.params.y;
             app.render();
         });
+
+        // Event: Orientation changed
+        telemetry.on('data_dash:big_PositionService_OrientationChanged', (packet) => {
+            if (packet.params === undefined) return;
+
+            app.visual.robot.orientation = packet.params.orientation;
+            app.render();
+        });
+
+        // Event: Target queue changed
+        telemetry.on('data_dash:big_MotionService_TargetQueueChanged', (packet) => {
+            if (packet.params === undefined) return;
+
+            app.visual.targets = packet.params;
+
+            // Add start target
+            app.visual.targets.unshift({
+                point: { x: this.visual.robot.x, y: this.visual.robot.y },
+                params: { }
+            });
+            app.render();
+        });
+
+        // Event: HazardObstacleDistance set
+        telemetry.on('data_dash:big_MotionService_HazardObstacleDistanceSet', (packet) => {
+            if (packet.params === undefined) return;
+
+            app.visual.robot.hazardObstacleDistance = packet.params.hazardObstacleDistance;
+
+            app.render();
+        });
+
+        // Make background ready
+        this.drawBackground();
     }
 
     render() {
@@ -57,6 +103,36 @@ class App {
 
         // Draw robot
         this.drawRobot();
+
+        // Draw targets
+        this.drawTargets();
+    }
+
+    _genX(y) { return (y + this.config.terrainWidth / 2); }
+    _genY(x) { return (this.config.terrainHeight / 2 - x); }
+
+    drawTargets() {
+        let targets = this.visual.targets;
+        for (let i = 0; i < targets.length; i++) {
+            this.ctx.fillStyle = 'rgb(0, 255, 0)';
+
+            // Draw target rect
+            this.ctx.fillRect(
+                this._genX(targets[i].point.y) - 50,
+                this._genY(targets[i].point.x) - 50,
+                100, 100
+            );
+
+            // Draw line between targets
+            if (i > 0) {
+                this.ctx.strokeStyle = 'rgb(100, 255, 100)';
+                this.ctx.lineWidth = 10;
+                this.ctx.beginPath();
+                this.ctx.moveTo(this._genX(targets[i - 1].point.y), this._genY(targets[i - 1].point.x));
+                this.ctx.lineTo(this._genX(targets[i].point.y), this._genY(targets[i].point.x));
+                this.ctx.stroke();
+            }
+        }
     }
 
     drawBackground() {
@@ -86,15 +162,31 @@ class App {
     }
 
     drawRobot() {
-        console.log(this.visual.robot);
+        let x = this._genX(this.visual.robot.y);
+        let y = this._genY(this.visual.robot.x);
 
+        this.ctx.save();
+        this.ctx.translate(x, y);
+        this.ctx.rotate((90 - this.visual.robot.angle) * (Math.PI / 180));
+
+        // Draw robot body
         this.ctx.fillStyle = 'rgba(255, 0, 0, 0.7)';
         this.ctx.fillRect(
-          this.visual.robot.y + this.config.terrainWidth / 2 - 250 / 2,
-          this.config.terrainHeight / 2 - this.visual.robot.x - 250 / 2,
-          250,
-          250
+            - this.visual.robot.width / 2,
+            - this.visual.robot.height / 2,
+            this.visual.robot.width,
+            this.visual.robot.height
         );
+
+        // Draw hazard circle
+        this.ctx.strokeStyle = 'rgb(255, 0, 0)';
+        this.ctx.lineWidth = 5;
+        this.ctx.beginPath();
+        this.ctx.arc(0, 0, this.visual.robot.hazardObstacleDistance, 0, 2 * Math.PI);
+        this.ctx.stroke();
+
+        this.ctx.restore();
+
     }
 
     drawObstacles() {
