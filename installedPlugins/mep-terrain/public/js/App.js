@@ -167,7 +167,7 @@ class App {
 
         this.ctx.save();
         this.ctx.translate(x, y);
-        this.ctx.rotate((90 - this.visual.robot.angle) * (Math.PI / 180));
+        this.ctx.rotate((90 - this.visual.robot.orientation) * (Math.PI / 180));
 
         // Draw robot body
         this.ctx.fillStyle = 'rgba(255, 0, 0, 0.7)';

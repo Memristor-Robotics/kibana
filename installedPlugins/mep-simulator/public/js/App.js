@@ -40,6 +40,7 @@ class App {
             terrainHeight: this.config.terrainHeight,
             stateChangedCallback: this.onRobotStateChanged.bind(this),
             positionChangedCallback: this.onRobotPositionChanged.bind(this),
+            orientationChangedCallback: this.onRobotOrientationChanged.bind(this),
         });
         this.robots.push(bigRobot);
 
@@ -70,6 +71,17 @@ class App {
                 console.error('Cannot resolve action:', packet.action);
                 break;
         }
+    }
+
+    onRobotOrientationChanged(robot, orientation) {
+        this.telemetry.send(
+            'dash:' + robot.getName(),
+            'core:' + robot.getName(),
+            'MotionDriverSimulator',
+            'orientationChanged', {
+                orientation: orientation
+            }
+        );
     }
 
     onRobotStateChanged(robot, state) {

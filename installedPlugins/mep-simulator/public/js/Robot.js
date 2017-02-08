@@ -20,7 +20,8 @@ class Robot {
             initialSpeed: 130,
             initialAngle: 90,
             stateChangedCallback: (() => {}),
-            positionChangedCallback: (() => {})
+            positionChangedCallback: (() => {}),
+            orientationChangedCallback: (() => {})
         }, config);
 
         // Set default parameters
@@ -34,6 +35,8 @@ class Robot {
             stepSizeMul: 1,
         };
         this.setSpeed(this.config.initialSpeed);
+
+        this.setAngle = this.setAngle.bind(this);
     }
 
     getName() {
@@ -59,6 +62,7 @@ class Robot {
 
     setAngle(angle) {
         this.visual.angle = angle;
+        this.config.orientationChangedCallback(this, angle | 0);
     }
 
     setRefreshPeriod() {
