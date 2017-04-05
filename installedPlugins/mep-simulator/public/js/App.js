@@ -57,7 +57,7 @@ class App {
         let rect = this.canvas.getBoundingClientRect();
         this.visual.mouseX = ((event.clientX - rect.left) / this.scaleWidth) | 0;
         this.visual.mouseY = ((event.clientY - rect.top) / this.scaleHeight) | 0;
-        this.visual.mouseTerrainY = (this.visual.mouseX - this.config.terrainWidth / 2) | 0;
+        this.visual.mouseTerrainY = (this.config.terrainWidth / 2 - this.visual.mouseX) | 0;
         this.visual.mouseTerrainX = (this.config.terrainHeight / 2 - this.visual.mouseY) | 0;
     }
 

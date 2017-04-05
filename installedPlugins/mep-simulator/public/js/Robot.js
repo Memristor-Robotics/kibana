@@ -1,11 +1,12 @@
 class Robot {
     static get DIRECTION_FORWARD() { return 1; }
     static get DIRECTION_BACKWARD() { return -1; }
-    static get STATE_IDLE() { return 1; }
-    static get STATE_STUCK() { return 2; }
-    static get STATE_MOVING() { return 3; }
-    static get STATE_ROTATING() { return 4; }
-    static get STATE_ERROR() { return 5; }
+    static get STATE_IDLE() { return 'I'.charCodeAt(0); }
+    static get STATE_STUCK() { return 'S'.charCodeAt(0); }
+    static get STATE_MOVING() { return 'M'.charCodeAt(0); }
+    static get STATE_ROTATING() { return 'R'.charCodeAt(0); }
+    static get STATE_ERROR() { return 'E'.charCodeAt(0); }
+    static get STATE_UNDEFINED() { return 'U'.charCodeAt(0); }
 
     constructor(ctx, config = {}) {
         // Apply default configs if configs doesn't contain parameter
@@ -125,12 +126,12 @@ class Robot {
     }
 
     draw() {
-        let x = this.visual.y + this.config.terrainWidth / 2;
+        let x = this.config.terrainWidth / 2 - this.visual.y;
         let y = this.config.terrainHeight / 2 - this.visual.x;
 
         this.ctx.save();
         this.ctx.translate(x, y);
-        this.ctx.rotate((90 - this.visual.angle) * (Math.PI / 180));
+        this.ctx.rotate((this.visual.angle - 90) * (Math.PI / 180));
 
         // Draw robot body
         this.ctx.fillStyle = '#e74c3c';

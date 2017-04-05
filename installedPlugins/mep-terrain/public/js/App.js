@@ -108,7 +108,7 @@ class App {
         this.drawTargets();
     }
 
-    _genX(y) { return (y + this.config.terrainWidth / 2); }
+    _genX(y) { return (this.config.terrainWidth / 2 - y); }
     _genY(x) { return (this.config.terrainHeight / 2 - x); }
 
     drawTargets() {
@@ -167,7 +167,7 @@ class App {
 
         this.ctx.save();
         this.ctx.translate(x, y);
-        this.ctx.rotate((90 - this.visual.robot.orientation) * (Math.PI / 180));
+        this.ctx.rotate((this.visual.robot.orientation + 90) * (Math.PI / 180));
 
         // Draw robot body
         this.ctx.fillStyle = 'rgba(255, 0, 0, 0.7)';
@@ -200,11 +200,11 @@ class App {
     drawPolygon(polygon) {
         this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
         this.ctx.beginPath();
-        this.ctx.moveTo(polygon[0].y + this.config.terrainWidth / 2, this.config.terrainHeight / 2 - polygon[0].x);
+        this.ctx.moveTo(this.config.terrainWidth / 2 - polygon[0].y, this.config.terrainHeight / 2 - polygon[0].x);
 
         for (let i = 1; i < polygon.length; i++) {
             let point = polygon[i];
-            this.ctx.lineTo(point.y + this.config.terrainWidth / 2, this.config.terrainHeight / 2 - point.x);
+            this.ctx.lineTo(this.config.terrainWidth / 2 - point.y, this.config.terrainHeight / 2 - point.x);
         }
 
         this.ctx.closePath();
